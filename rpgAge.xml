@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<!--
+/**
+* @package RPG Age and School Year Calculator
+*
+* @author Cody Williams
+* @copyright 2015
+* @version 1.1
+* @license BSD 3-clause
+*/
+-->
+
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Cody:RPG Age and School Year Calculator</id>
+<version>1.1</version>
+<file name="$sourcedir/Profile-View.php">
+    <operation>
+      <search position="before" whitespace="loose" ><![CDATA[	else
+	{
+		list ($birth_year, $birth_month, $birth_day) = sscanf($context['member']['birth_date'], '%d-%d-%d');
+		$datearray = getdate(forum_time());
+		$context['member'] += array(
+			'age' => $birth_year <= 4 ? $txt['not_applicable'] : $datearray['year'] - $birth_year - (($datearray['mon'] > $birth_month || ($datearray['mon'] == $birth_month && $datearray['mday'] >= $birth_day)) ? 0 : 1),
+			'today_is_birthday' => $datearray['mon'] == $birth_month && $datearray['mday'] == $birth_day
+		);
+	}
+]]></search>
+      <add><![CDATA[
+// RPG Age and School Year Calculator.  Function overwrites Age on profile view with age based on RPG date.
+rpgAgeProfile();
+]]></add>
+    </operation>
+  </file>
+  <file name="$languagedir/Profile.english.php" error="skip">
+    <operation>
+      <search position="replace"><![CDATA[
+$txt['dob'] = 'Birthdate';
+]]></search>
+      <add><![CDATA[
+$txt['dob'] = 'Character Birthdate';
+]]></add>
+    </operation>
+  </file>
+
+
+</modification>

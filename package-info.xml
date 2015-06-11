@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<!--
+/**
+* @package RPG Age and School Year Calculator
+*
+* @author Cody Williams
+* @copyright 2015
+* @version 1.1
+* @license BSD 3-clause
+*/
+-->
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<name>RPG Age and School Year Calculator</name>
+	<id>Cody:rpgAge</id>
+	<type>modification</type>
+	<version>1.1</version>
+
+	<install for="2.0 - 2.0.99">
+	  <readme type="inline">This will install RPG Age and Year Calculator for SMF 2.0.x</readme>
+		<code>install.php</code>
+		<code>install-hooks.php</code>
+    <require-file name="rpgAge.php" destination="$sourcedir" />
+    <require-file name="rpgAgeAdmin.php" destination="$sourcedir" />
+    <require-file name="Subs-rpgAge.php" destination="$sourcedir" />
+    <require-file name="rpgAge.template.php" destination="$themedir" />
+    <require-file name="rpgAge.js" destination="$themedir/scripts" />
+    <require-file name="rpgAge.english.php" destination="$languagedir" />
+    <modification>rpgAge.xml</modification>
+    <redirect url="$scripturl?action=admin;area=rpg_age;sa=general" />
+	
+	</install>
+
+	<uninstall for="2.0 - 2.0.99">
+	  <readme type="inline">This will uninstall RPG Age and Year Calculator for SMF 2.0.x</readme>
+		<code>install-hooks.php</code>
+		<remove-file name="$sourcedir/rpgAge.php" />
+		<remove-file name="$sourcedir/rpgAgeAdmin.php" />
+    <remove-file name="$sourcedir/Subs-rpgAge.php" />
+    <remove-file name="$themedir/rpgAge.template.php" />
+    <remove-file name="$themedir/scripts/rpgAge.js" />
+    <remove-file name="$languagedir/rpgAge.english.php" />
+    <modification reverse="true">rpgAge.xml</modification>
+	</uninstall>
+
+</package-info>
