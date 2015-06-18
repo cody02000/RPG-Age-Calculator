@@ -18,15 +18,11 @@
 
 	<install for="2.0 - 2.0.99">
 	  <readme type="inline">This will install RPG Age and Year Calculator for SMF 2.0.x</readme>
-		<code>install.php</code>
+		<database type="file">install-database.php</database>
 		<code>install-hooks.php</code>
-    <require-file name="rpgAge.php" destination="$sourcedir" />
-    <require-file name="rpgAgeAdmin.php" destination="$sourcedir" />
-    <require-file name="Subs-rpgAge.php" destination="$sourcedir" />
-    <require-file name="rpgAge.template.php" destination="$themedir" />
-    <require-file name="rpgAge.js" destination="$themedir/scripts" />
-    <require-file name="rpgAge.english.php" destination="$languagedir" />
-    <modification>rpgAge.xml</modification>
+		<require-dir name="Sources" destination="$boarddir" />
+		<require-dir name="Themes" destination="$boarddir" />
+    <modification>modification.xml</modification>
     <redirect url="$scripturl?action=admin;area=rpg_age;sa=general" />
 	
 	</install>
@@ -40,7 +36,7 @@
     <remove-file name="$themedir/rpgAge.template.php" />
     <remove-file name="$themedir/scripts/rpgAge.js" />
     <remove-file name="$languagedir/rpgAge.english.php" />
-    <modification reverse="true">rpgAge.xml</modification>
+    <modification reverse="true">modification.xml</modification>
 	</uninstall>
 
 </package-info>
