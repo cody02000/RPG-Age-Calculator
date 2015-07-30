@@ -84,18 +84,42 @@ function rpgAgeProfile()
   if ($modSettings['rpg_age_profile_age']==True && !empty($context['member']['birth_date'])){
     list ($birth_year, $birth_month, $birth_day) = explode('-',$context['member']['birth_date']);
     $birth_array=getdate(mktime(0,0,0,$birth_month,$birth_day,$birth_year));
-    
+
     list ($end_year, $end_month, $end_day)=explode('-', $modSettings['rpg_end_date']);
     $end_array=getdate(mktime(0,0,0,$end_month,$end_day,$end_year));
-    
+	
     list ($start_year, $start_month, $start_day)=explode('-', $modSettings['rpg_start_date']);
     $start_array=getdate(mktime(0,0,0,$start_month,$start_day,$start_year));
 
     $age=$end_array['year'] - $birth_array['year'];
-    
-    $context['member']['age']= $birth_year <= 4 ? $txt['not_applicable'] : ($birth_array['yday']<=$start_array['yday'] ? $age : ($birth_array['yday'] <= $end_array['yday'] ?  $age-1 . ' ('.$age.' on '.date(rpgAgeDateFormat(),$birth_array[0]).')' : $age-1));
-    
-	$context['member']['today_is_birthday'] = $birth_year <= 4 ? false : ($birth_array['yday'] >= $start_array['yday'] && $birth_array['yday'] <= $end_array['yday']);
+
+	if ($birth_year > 4) {
+		if ($start_array['year'] == $end_array['year']) {
+			$context['member']['age']= $birth_array['yday']<=$start_array['yday'] ? $age : ($birth_array['yday'] <= $end_array['yday'] ?  $age-1 . ' ('.$age.' on '.date(rpgAgeDateFormat(),mktime(0,0,0,$birth_month,$birth_day,$end_year)).')' : $age-1);
+			$context['member']['today_is_birthday'] = $birth_year <= 4 ? false : ($birth_array['yday'] >= $start_array['yday'] && $birth_array['yday'] <= $end_array['yday']);
+			
+		}
+			
+		else {
+			if ($birth_array['yday'] >= $start_array['yday']) {
+				$age-=2;
+				$context['member']['age']= $age++ . ' (' . $age . ' on '.date(rpgAgeDateFormat(),mktime(0,0,0,$birth_month,$birth_day,$start_year)).')';
+				$context['member']['today_is_birthday'] = True;
+			}
+			elseif ($birth_array['yday'] <= $end_array['yday']) {
+				$context['member']['age']=$age-1 . ' ('.$age.' on '.date(rpgAgeDateFormat(),mktime(0,0,0,$birth_month,$birth_day,$end_year)).')';
+				$context['member']['today_is_birthday'] = True;
+			}
+			else {
+				$context['member']['age']=$age-1;
+				$context['member']['today_is_birthday'] = FALSE;
+			}
+		}
+	}
+	else {
+		$context['member']['age']=$txt['not_applicable'];
+	}
+	
   }
 }
 
